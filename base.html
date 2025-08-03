@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recursos Gratuitos</title>
+  <style>
+    :root {
+      --dark-blue: #0f1e3e;
+      --blue: #1e3a8a;
+      --light-blue: #60a5fa;
+      --accent: #38bdf8;
+      --text-light: #e0f2fe;
+      --bg-light: #f0f9ff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--dark-blue);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .container {
+      background-color: var(--blue);
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 600px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    ul {
+      list-style: none;
+      margin-bottom: 1rem;
+    }
+    li {
+      background-color: var(--bg-light);
+      color: var(--dark-blue);
+      margin-bottom: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li a {
+      text-decoration: none;
+      color: var(--dark-blue);
+      font-weight: 500;
+    }
+    .add-form {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .add-form input {
+      flex: 1;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 0.25rem;
+    }
+    .add-form button {
+      background-color: var(--accent);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      color: var(--dark-blue);
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .add-form button:hover {
+      background-color: var(--light-blue);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Recursos Gratis programacion</h1>
+    <ul id="linkList"></ul>
+    <form id="addForm" class="add-form">
+      <input type="text" id="titleInput" placeholder="Título" required />
+      <input type="url" id="urlInput" placeholder="URL (https://)" required />
+      <button type="submit">Agregar</button>
+    </form>
+  </div>
+
+  <script>
+    // Datos iniciales desde JSON ficticio
+    const initialData = [
+      { title: "Introduccion a algoritmos", url: "https://dl.ebooksworld.ir/books/Introduction.to.Algorithms.4th.Leiserson.Stein.Rivest.Cormen.MIT.Press.9780262046305.EBooksWorld.ir.pdf" },
+        
+    ];
+
+    let items = [...initialData];
+
+    const listEl = document.getElementById('linkList');
+    const form = document.getElementById('addForm');
+    const titleInput = document.getElementById('titleInput');
+    const urlInput = document.getElementById('urlInput');
+
+    function renderList() {
+      listEl.innerHTML = '';
+      items.forEach(item => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.textContent = item.title;
+        a.href = item.url;
+        a.target = '_blank';
+        li.appendChild(a);
+        listEl.appendChild(li);
+      });
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const title = titleInput.value.trim();
+      const url = urlInput.value.trim();
+      if (!title || !url) return;
+      items.push({ title, url });
+      renderList();
+      form.reset();
+      titleInput.focus();
+    });
+
+    // Carga inicial
+    document.addEventListener('DOMContentLoaded', renderList);
+  </script>
+</body>
+</html>
