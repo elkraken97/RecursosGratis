@@ -79,23 +79,46 @@
     .add-form button:hover {
       background-color: var(--light-blue);
     }
+        #searchInput {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: none;
+      background: var(--bg-light);
+      color: var(--dark-blue);
+      font-size: 1rem;
+      box-shadow: 0 2px 6px rgba(30,58,138,0.08);
+      transition: box-shadow 0.2s, background 0.2s;
+      outline: none;
+    }
+    #searchInput:focus {
+      background: #fff;
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    ::placeholder {
+      color: #7fa7c7;
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Recursos Gratis programacion</h1>
+    <input type="text" id="searchInput" placeholder="Buscar un recurso...">
     <ul id="linkList"></ul>
-  
   </div>
 
 <script>
     let items = [];
+    let filteredItems = [];
 
     const listEl = document.getElementById('linkList');
+    const searchInput = document.getElementById('searchInput');
 
-    function renderList() {
+    function renderList(list = items) {
       listEl.innerHTML = '';
-      items.forEach(item => {
+      list.forEach(item => {
         const li = document.createElement('li');
         const a = document.createElement('a');
         a.textContent = item.title;
@@ -105,6 +128,13 @@
         listEl.appendChild(li);
       });
     }
+
+    // Filtrar recursos al escribir en el input
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      filteredItems = items.filter(item => item.title.toLowerCase().includes(query));
+      renderList(filteredItems);
+    });
 
     // Carga datos desde el archivo JSON externo
     document.addEventListener('DOMContentLoaded', () => {
