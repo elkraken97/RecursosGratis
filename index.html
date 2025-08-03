@@ -85,11 +85,7 @@
   <div class="container">
     <h1>Recursos Gratis programacion</h1>
     <ul id="linkList"></ul>
-    <form id="addForm" class="add-form">
-      <input type="text" id="titleInput" placeholder="Título" required />
-      <input type="url" id="urlInput" placeholder="URL (https://)" required />
-      <button type="submit">Agregar</button>
-    </form>
+  
   </div>
 
   <script>
@@ -118,17 +114,6 @@
         listEl.appendChild(li);
       });
     }
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const title = titleInput.value.trim();
-      const url = urlInput.value.trim();
-      if (!title || !url) return;
-      items.push({ title, url });
-      renderList();
-      form.reset();
-      titleInput.focus();
-    });
 
     // Carga inicial
     document.addEventListener('DOMContentLoaded', renderList);
